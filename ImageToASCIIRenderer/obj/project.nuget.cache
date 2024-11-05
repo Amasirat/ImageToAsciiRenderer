@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "Nuqs97xegIY=",
+  "success": true,
+  "projectFilePath": "/home/amasirat/dev/ImageToASCIIRenderer/ImageToASCIIRenderer/ImageToASCIIRenderer.csproj",
+  "expectedPackageFiles": [
+    "/home/amasirat/.nuget/packages/microsoft.aspnetcore.app.ref/8.0.10/microsoft.aspnetcore.app.ref.8.0.10.nupkg.sha512"
+  ],
+  "logs": []
+}
