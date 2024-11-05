@@ -1,4 +1,3 @@
-using System.Text;
 using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.PixelFormats;
 using SixLabors.ImageSharp.Processing;
@@ -24,7 +23,7 @@ public class AsciiMachine
     public AsciiMachine()
     {
         outputPath = Globals.DefaultOutput;
-        asciichars = Globals.DefaultASCIIChars.ToArray();
+        asciichars = Globals.DefaultASCIIChars;
         ResizeFactor = Globals.ResizeFactor;
         DoResize = Globals.DefaultDoResize;
     }
@@ -75,6 +74,7 @@ public class AsciiMachine
                 }
             }
         });
+        // create the correct directory if it does not exist
         if (!Directory.Exists(outputPath))
         {
             Directory.CreateDirectory(outputPath);

@@ -18,7 +18,8 @@
                 // Parse Arguments
                 state = State.ParsingInvalid;
                 ParseArguments(args);
-                if (state == State.ParsingInvalid) throw new Exception("Invalid arguments");
+                // If input is not given, the state will not allow the program to continue
+                if (state == State.ParsingInvalid) throw new Exception("Invalid arguments: No input given");
                 
                 // Do the job
                 AsciiMachine machine;
@@ -56,6 +57,8 @@
                             if(arguments[argPosition + 1].StartsWith("--")) 
                                 throw new Exception("Invalid output");
                             outputpath = arguments[argPosition + 1];
+                            break;
+                        case "--help":
                             break;
                     }
                 }

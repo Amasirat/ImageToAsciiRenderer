@@ -2,16 +2,13 @@ namespace ImageToASCIIRenderer;
 
 public static class Globals
 {
-    public static string RootDirectory = 
-        Directory.GetParent(Environment.CurrentDirectory).Parent.Parent.FullName;
-    
-    public static string DefaultOutput = 
-        RootDirectory + @"/out/";
+    public static readonly string DefaultOutput = 
+        Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) + @"/AsciiOut/";
 
-    public static char[] DefaultASCIIChars = 
+    public static readonly char[] DefaultASCIIChars = 
         { ' ', '.', ':', '-', '=', '+', '*', '#', '@', '$' };
     
-    public static int ResizeFactor = 2;
+    public static readonly int ResizeFactor = 2;
 
-    public static bool DefaultDoResize = true;
+    public static readonly bool DefaultDoResize = true;
 }
