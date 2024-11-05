@@ -1,3 +1,11 @@
-﻿// See https://aka.ms/new-console-template for more information
-
-Console.WriteLine("Hello, World!");
+﻿
+namespace ImageToASCIIRenderer
+{
+    internal static class Parser
+    {
+        public static void Main(string[] args)
+        {
+            
+        }
+    }
+}
