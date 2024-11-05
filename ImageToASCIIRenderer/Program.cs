@@ -6,7 +6,7 @@
         {
             AsciiMachine machine = new AsciiMachine();
             
-            machine.ConvertToAscii(Globals.ProjectDirectory + @"/assets/image.jpg");
+            machine.ConvertToAscii(Globals.ProjectDirectory + @"/assets/image2.png");
         }
     }
 }
