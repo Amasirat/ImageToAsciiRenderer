@@ -32,6 +32,9 @@ public class AsciiMachine
     public AsciiMachine(string outPath)
     {
         outputPath = outPath;
+        asciichars = Globals.DefaultASCIIChars;
+        ResizeFactor = Globals.ResizeFactor;
+        DoResize = Globals.DefaultDoResize;
     }
     
     public void ChangeAsciiChars(char[] chars)
@@ -72,6 +75,10 @@ public class AsciiMachine
                 }
             }
         });
+        if (!Directory.Exists(outputPath))
+        {
+            Directory.CreateDirectory(outputPath);
+        }
         StreamWriter sw = File.CreateText(outputPath + 
                                           Path.GetFileNameWithoutExtension(imagePath) + 
                                           ".ascii.txt");

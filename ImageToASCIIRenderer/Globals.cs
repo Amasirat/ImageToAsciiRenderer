@@ -2,11 +2,11 @@ namespace ImageToASCIIRenderer;
 
 public static class Globals
 {
-    public static string ProjectDirectory = 
+    public static string RootDirectory = 
         Directory.GetParent(Environment.CurrentDirectory).Parent.Parent.FullName;
     
     public static string DefaultOutput = 
-        ProjectDirectory + @"/Out/";
+        RootDirectory + @"/out/";
 
     public static char[] DefaultASCIIChars = 
         { ' ', '.', ':', '-', '=', '+', '*', '#', '@', '$' };

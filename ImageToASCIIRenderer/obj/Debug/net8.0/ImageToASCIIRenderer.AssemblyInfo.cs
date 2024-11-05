@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("ImageToASCIIRenderer")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+82e523469b99845aa76d64494f526c22b5a6f714")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+3fa534bf57ef8f243d0178fe9b32e6cd5ea1e714")]
 [assembly: System.Reflection.AssemblyProductAttribute("ImageToASCIIRenderer")]
 [assembly: System.Reflection.AssemblyTitleAttribute("ImageToASCIIRenderer")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
