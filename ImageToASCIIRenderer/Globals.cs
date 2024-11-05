@@ -6,7 +6,7 @@ public static class Globals
         Directory.GetParent(Environment.CurrentDirectory).Parent.Parent.FullName;
     
     public static string DefaultOutput = 
-        ProjectDirectory + @"\Out\";
+        ProjectDirectory + @"/Out/";
 
     public static char[] DefaultASCIIChars = 
         { ' ', '.', ':', '-', '=', '+', '*', '#', '@', '$' };

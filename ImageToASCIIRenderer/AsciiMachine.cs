@@ -8,7 +8,8 @@ namespace ImageToASCIIRenderer;
 public class AsciiMachine
 {
     // Master Ctor
-    public AsciiMachine(string outputPath, char[] chars, int resize, bool doResize) : this(outputPath, chars)
+    public AsciiMachine(string outputPath, char[] chars, 
+        int resize, bool doResize) : this(outputPath, chars)
     {
         DoResize = doResize;
         ResizeFactor = resize;
@@ -25,6 +26,7 @@ public class AsciiMachine
         outputPath = Globals.DefaultOutput;
         asciichars = Globals.DefaultASCIIChars.ToArray();
         ResizeFactor = Globals.ResizeFactor;
+        DoResize = Globals.DefaultDoResize;
     }
     // Output Arg Ctor
     public AsciiMachine(string outPath)
@@ -36,7 +38,8 @@ public class AsciiMachine
     {
         if (chars.Length != asciichars.Length)
         {
-            throw new ArgumentException($"There must only be {asciichars.Length} ASCII chars");
+            throw new 
+                ArgumentException($"There must only be {asciichars.Length} ASCII chars");
         }
         
         for (int i = 0; i < chars.Length; i++)
@@ -45,12 +48,12 @@ public class AsciiMachine
         }
     }
 
-    public StringBuilder ConvertToAscii(Image<L8> image)
+    public void ConvertToAscii(string imagePath)
     {
-        StringBuilder asciiImage = new StringBuilder();
+        using Image<L8> image = Image.Load<L8>(imagePath);
         // Resize image if DoResize is true
         if(DoResize) image.Mutate(x => 
-            x.Resize(image.Width/ResizeFactor, image.Height/ResizeFactor));
+            x.Resize(image.Width / ResizeFactor, image.Height / ResizeFactor));
         
         // Find minimum and maximum luminance for image,
         // for normalizing luminance with respect to the image
@@ -58,37 +61,39 @@ public class AsciiMachine
         int maxLuminance = 0;
         image.ProcessPixelRows(accessor =>
         {
-            for (int y = 0; y < image.Height; y++)
+            for (int y = 0; y < accessor.Height; y++)
             {
                 Span<L8> row = accessor.GetRowSpan(y);
-                for (int x = 0; x < image.Width; x++)
+                for (int x = 0; x < accessor.Width; x++)
                 {
                     int luminance = row[x].PackedValue;
                     if (luminance > maxLuminance) maxLuminance = luminance;
-                    if(luminance < minLuminance) minLuminance = luminance;
+                    if (luminance < minLuminance) minLuminance = luminance;
                 }
             }
         });
-        
-        int range = maxLuminance - minLuminance + 1;
+        StreamWriter sw = File.CreateText(outputPath + 
+                                          Path.GetFileNameWithoutExtension(imagePath) + 
+                                          ".ascii.txt");
+        int range = (maxLuminance - minLuminance) + 1;
         // Build the string using the information of each pixel's luminance
         image.ProcessPixelRows(accessor =>
         {
-            for (int y = 0; y < image.Width; y++)
+            for (int y = 0; y < accessor.Height; y++)
             {
                 Span<L8> row = accessor.GetRowSpan(y);
-                for (int x = 0; x < image.Width; x++)
+                for (int x = 0; x < accessor.Width; x++)
                 {
                     int luminance = row[x].PackedValue;
                     int normalizedLuminance = 
                         (luminance - minLuminance) * (asciichars.Length - 1) / range;
-                    asciiImage.Append(asciichars[normalizedLuminance]);
+                    sw.Write(asciichars[normalizedLuminance]);
                 }
                 // append new line in order to format the ascii output
-                asciiImage.Append("\n");
+                sw.Write('\n');
             }
         });
-        return asciiImage;
+        sw.Close();
     }
     
     // Properties
