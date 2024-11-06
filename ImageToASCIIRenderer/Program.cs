@@ -2,35 +2,41 @@
 {
     internal static class Parser
     {
-        public enum State : byte
+        private enum State : byte
         {
             ParsingValid,
             ParsingInvalid
         }
         public static void Main(string[] args)
         {
-            // AsciiMachine machine = new AsciiMachine();
-            //
-            // machine.ConvertToAscii(Globals.ProjectDirectory + @"/assets/image2.png");
-            
             try
             {
                 // Parse Arguments
-                state = State.ParsingInvalid;
+                // Once input has been received, state changes to State.ParsingValid
+                _state = State.ParsingInvalid;
                 ParseArguments(args);
                 // If input is not given, the state will not allow the program to continue
-                if (state == State.ParsingInvalid) throw new Exception("Invalid arguments: No input given");
-                
+                if (_state == State.ParsingInvalid) throw new Exception("Invalid arguments: No input given");
+
                 // Do the job
-                AsciiMachine machine;
-                if(outputpath != null)
-                    machine = new AsciiMachine(outputpath);
+                _outputPath = _outputPath ?? Globals.DefaultOutput;
+                AsciiMachine machine = new AsciiMachine(_outputPath);
+
+                if (_inputPath != null)
+                {
+                    machine.ConvertToAscii(_inputPath);
+                    Console.WriteLine($"Successfully converted to ASCII on {_outputPath}");
+                }
                 else
                 {
-                    machine = new AsciiMachine();
+                    throw new Exception("Input was not given! (Main thread)");
                 }
                 
-                machine.ConvertToAscii(inputPath);
+                   
+            }
+            catch (IndexOutOfRangeException)
+            {
+                Console.WriteLine("An operation is missing its operand!");
             }
             catch (Exception e)
             {
@@ -38,7 +44,7 @@
             }
         }
 
-        public static void ParseArguments(string[] arguments)
+        private static void ParseArguments(string[] arguments)
         {
             int argPosition = 0;
             while (argPosition < arguments.Length)
@@ -50,28 +56,34 @@
                         case "--in":
                             if(arguments[argPosition + 1].StartsWith("--")) 
                                 throw new Exception("Invalid input");
-                            inputPath = arguments[argPosition + 1];
-                            state = State.ParsingValid;
+                            _inputPath = arguments[argPosition + 1];
+                            // input has to be given for the program to function
+                            _state = State.ParsingValid;
                             break;
                         case "--out":
                             if(arguments[argPosition + 1].StartsWith("--")) 
                                 throw new Exception("Invalid output");
-                            outputpath = arguments[argPosition + 1];
+                            _outputPath = arguments[argPosition + 1];
                             break;
                         case "--help":
                             break;
+                        default:
+                            throw new Exception("Invalid argument: " + arguments[argPosition]);
                     }
                 }
                 else
                 {
-                    throw new Exception($"Invalid argument: {arguments[0]}");
+                    throw new Exception($"Invalid argument: {arguments[argPosition]}");
                 }
+                // go to the next operation
+                // each operation takes in only one argument, therefore this method
+                // is the simplest
                 argPosition += 2;
             }
         }
-        public static State state { get; set; }
-
-        private static string? outputpath = null;
-        private static string? inputPath = null;
+        // fields
+        private static State _state;
+        private static string? _outputPath;
+        private static string? _inputPath;
     }
 }
