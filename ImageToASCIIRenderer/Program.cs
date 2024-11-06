@@ -19,7 +19,8 @@
                 if (_state == State.ParsingInvalid) throw new Exception("Invalid arguments: No input given");
 
                 // Do the job
-                _outputPath = _outputPath ?? Globals.DefaultOutput;
+                // if null, give default value from Globals
+                _outputPath ??= Globals.DefaultOutput;
                 AsciiMachine machine = new AsciiMachine(_outputPath);
 
                 if (_inputPath != null)
