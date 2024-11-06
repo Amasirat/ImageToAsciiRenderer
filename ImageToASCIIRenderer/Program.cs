@@ -25,15 +25,13 @@
 
                 if (_inputPath != null)
                 {
-                    machine.ConvertToAscii(_inputPath);
-                    Console.WriteLine($"Successfully converted to ASCII on {_outputPath}");
+                    string output = machine.ConvertToAscii(_inputPath);
+                    Console.WriteLine($"Successfully converted to ASCII as {output}");
                 }
                 else
                 {
                     throw new Exception("Input was not given! (Main thread)");
                 }
-                
-                   
             }
             catch (IndexOutOfRangeException)
             {

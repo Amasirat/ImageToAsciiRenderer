@@ -50,7 +50,7 @@ public class AsciiMachine
         }
     }
 
-    public void ConvertToAscii(string imagePath)
+    public string ConvertToAscii(string imagePath)
     {
         using Image<L8> image = Image.Load<L8>(imagePath);
         // Resize image if DoResize is true
@@ -79,9 +79,8 @@ public class AsciiMachine
         {
             Directory.CreateDirectory(outputPath);
         }
-        StreamWriter sw = File.CreateText(outputPath + 
-                                          Path.GetFileNameWithoutExtension(imagePath) + 
-                                          ".ascii.txt");
+        string outputFile = outputPath + Path.GetFileNameWithoutExtension(imagePath) + ".ascii.txt";
+        StreamWriter sw = File.CreateText(outputFile);
         int range = (maxLuminance - minLuminance) + 1;
         // Build the string using the information of each pixel's luminance
         image.ProcessPixelRows(accessor =>
@@ -101,6 +100,7 @@ public class AsciiMachine
             }
         });
         sw.Close();
+        return outputFile;
     }
     
     // Properties
