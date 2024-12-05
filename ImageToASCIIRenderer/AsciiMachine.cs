@@ -74,7 +74,6 @@ public class AsciiMachine
                 }
             }
         });
-        // create the correct directory if it does not exist
         if (!Directory.Exists(outputPath))
         {
             Directory.CreateDirectory(outputPath);
